@@ -243,4 +243,3 @@ workflows:
   run_detox_tests:
     jobs:
       - android-test
-      - ios-test
