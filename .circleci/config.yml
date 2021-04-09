@@ -10,17 +10,13 @@ commands:
           command: |
             set +x
             source ~/.bashrc
-
             curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
             [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-
-
             nvm install 12.13.0
             NODE_DIR=$(dirname $(which node))
             echo "export PATH=$NODE_DIR:\$PATH" >> $BASH_ENV
-
   npm-dependencies:
     description: "Get JavaScript dependencies"
     steps:
@@ -100,7 +96,6 @@ commands:
           name: set ANDROID_SDK_ROOT
           command: |
             echo 'export ANDROID_SDK_ROOT=$HOME/android-tools'  >> $BASH_ENV
-
       - restore_cache:
           key: android=tools-v1-{{ checksum "scripts/install-android-tools.sh" }}-{{ arch }}
 
@@ -114,7 +109,6 @@ commands:
             echo 'export PATH=$ANDROID_SDK_ROOT/emulator:$PATH'  >> $BASH_ENV
             source $BASH_ENV
             sdkmanager --list
-
       - save_cache:
           key: android=tools-v1-{{ checksum "scripts/install-android-tools.sh" }}-{{ arch }}
           paths:
@@ -128,8 +122,6 @@ commands:
           name: "Install watchman"
           command: |
             HOMEBREW_NO_AUTO_UPDATE=1 brew install watchman
-
-
   simulator-dependencies:
     description: "Install iOS simulator dependencies"
     steps:
@@ -138,7 +130,6 @@ commands:
           command: |
             HOMEBREW_NO_AUTO_UPDATE=1 brew tap wix/brew
             HOMEBREW_NO_AUTO_UPDATE=1 brew install applesimutils
-
   create-launch-android-emulator:
     description: "create and launch android emulators"
     steps:
@@ -164,8 +155,6 @@ commands:
           command: |
             npx detox clean-framework-cache
             npx detox build-framework-cache
-
-
 jobs:
 
   android-test:
@@ -236,20 +225,20 @@ jobs:
           path: ././reports
           destination: ./reports
 
-prepare-build: &prepare-build
-  docker:
-    - image: buildpack-deps:trusty 
-  resource_class: small
-  environment:
-    CURRENT_BUILD: 0
-  steps:
-    - run: echo "BuildNumber_"$(( $CIRCLE_BUILD_NUM + $CIRCLE_BUILD_NUM_ADJUST ))"_" > buildnumber.txt
-    - run: cat buildnumber.txt
-    - persist_to_workspace:
-        root: .
-        paths: 
-          - buildnumber.txt
-          - ./builddetails/
+  prepare-build: &prepare-build
+    docker:
+      - image: buildpack-deps:trusty 
+    resource_class: small
+    environment:
+      CURRENT_BUILD: 0
+    steps:
+      - run: echo "BuildNumber_"$(( $CIRCLE_BUILD_NUM + $CIRCLE_BUILD_NUM_ADJUST ))"_" > buildnumber.txt
+      - run: cat buildnumber.txt
+      - persist_to_workspace:
+          root: .
+          paths: 
+            - buildnumber.txt
+            - ./builddetails/
 
 workflows:
   version: 2
@@ -258,4 +247,7 @@ workflows:
     jobs:
       - ios-test
       - android-test
-      - prepare-build
+      - prepare-build:
+          requires:
+            - ios-test
+            - android-test
