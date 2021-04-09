@@ -236,6 +236,20 @@ jobs:
           path: ././reports
           destination: ./reports
 
+prepare-build: &prepare-build
+  docker:
+    - image: buildpack-deps:trusty 
+  resource_class: small
+  environment:
+    CURRENT_BUILD: 0
+  steps:
+    - run: echo "BuildNumber_"$(( $CIRCLE_BUILD_NUM + $CIRCLE_BUILD_NUM_ADJUST ))"_" > buildnumber.txt
+    - run: cat buildnumber.txt
+    - persist_to_workspace:
+        root: .
+        paths: 
+          - buildnumber.txt
+          - ./builddetails/
 
 workflows:
   version: 2
@@ -243,3 +257,5 @@ workflows:
   run_detox_tests:
     jobs:
       - ios-test
+      - android-test
+      - prepare-build
