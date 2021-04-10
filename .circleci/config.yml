@@ -133,6 +133,7 @@ commands:
   create-launch-android-emulator:
     description: "create and launch android emulators"
     steps:
+      - run: echo $ANDROID_SDK_ROOT
       - run:
           name: create AVD
           command: echo "no" | avdmanager --verbose create avd --force --name "Pixel_3a_API_29" --package "system-images;android-29;google_apis;x86_64"
