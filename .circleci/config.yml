@@ -250,5 +250,5 @@ workflows:
       - android-test
       - prepare-build:
           requires:
-            - ios-test
+#             - ios-test
             - android-test
