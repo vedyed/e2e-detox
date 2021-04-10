@@ -76,18 +76,18 @@ commands:
           working_directory: ./android
           name: Chmod permissions
           command: sudo chmod +x ./gradlew
-      - restore_cache:
-          name: Restore Gradle cache
-          key: v1-gradle-{{ checksum "./android/build.gradle" }}-{{ checksum  "./android/app/build.gradle" }}-{{ arch }}
+#       - restore_cache:
+#           name: Restore Gradle cache
+#           key: v1-gradle-{{ checksum "./android/build.gradle" }}-{{ checksum  "./android/app/build.gradle" }}-{{ arch }}
       - run:
           working_directory: ./android
           name: Download Gradle dependencies
           command: ./gradlew dependencies
-      - save_cache:
-          name: Save Gradle cache
-          paths:
-            - ~/.gradle
-          key: v1-gradle-{{ checksum "./android/build.gradle" }}-{{ checksum  "./android/app/build.gradle" }}-{{ arch }}
+#       - save_cache:
+#           name: Save Gradle cache
+#           paths:
+#             - ~/.gradle
+#           key: v1-gradle-{{ checksum "./android/build.gradle" }}-{{ checksum  "./android/app/build.gradle" }}-{{ arch }}
 
   android-sdk-dependencies:
     description: "Install and set android SDK"
