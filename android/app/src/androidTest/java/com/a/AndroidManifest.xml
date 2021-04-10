@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="your.package.name">
 
-    <uses-sdk android:targetSdkVersion="27" android:minSdkVersion="16"
+    <uses-sdk android:targetSdkVersion="27" android:minSdkVersion="18"
         tools:overrideLibrary="com.wix.detox, android.support.test.uiautomator.v18"/>
 
 </manifest>
