@@ -1,7 +1,7 @@
 {
     "testEnvironment": "./environment",
     "testRunner": "jest-circus/runner",
-    "testTimeout": 120000,
+    "testTimeout": 9900000,
     "reporters": [
         "detox/runners/jest/streamlineReporter",
         "jest-standard-reporter",
