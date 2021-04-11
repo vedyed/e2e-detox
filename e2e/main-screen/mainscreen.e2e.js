@@ -14,7 +14,7 @@ describe('Example', () => {
   });
 
   it('should have description text on welcome screen', async () => {
-    await expect(1).toEqual(1);
+    await expect(element(by.id('UniqueId205'))).toBeNotVisible();
   });
 
 });
