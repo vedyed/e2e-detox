@@ -14,7 +14,7 @@ describe('Example', () => {
   });
 
   it('should have description text on welcome screen', async () => {
-    await expect(false).toBeFalsy();
+    await expect(1).toEqual(1);
   });
 
 });
