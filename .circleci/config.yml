@@ -278,10 +278,10 @@ workflows:
   run_detox_tests:
     jobs:
       - pre-build
-      - ios-test
+      - ios-test:
           requires:
             - pre-build
-      - android-test
+      - android-test:
           requires:
             - pre-build
       - build-publish:
