@@ -247,7 +247,7 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run: echo "BuildNumber_"$(( $CIRCLE_BUILD_NUM + $CIRCLE_BUILD_NUM_ADJUST ))"_" > buildnumber.txt
+      - run: echo "BuildNumber_"$(( $CIRCLE_BUILD_NUM))"_" > buildnumber.txt
       - run: cat buildnumber.txt
       - persist_to_workspace:
           root: .
